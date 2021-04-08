@@ -19,10 +19,7 @@ use std::slice;
 use std::sync::Arc;
 use thiserror::Error;
 use wasmtime_environ::entity::{packed_option::ReservedValue, EntityRef, EntitySet, PrimaryMap};
-use wasmtime_environ::wasm::{
-    DefinedFuncIndex, DefinedMemoryIndex, DefinedTableIndex, FuncIndex, GlobalInit, SignatureIndex,
-    TableElementType, WasmType,
-};
+use wasmtime_environ::wasm::{DefinedFuncIndex, DefinedTableIndex, FuncIndex, GlobalInit, SignatureIndex, TableElementType, WasmType, MemoryIndex};
 use wasmtime_environ::{
     ir, MemoryInitialization, MemoryInitializer, Module, ModuleType, TableInitializer, VMOffsets,
     WASM_PAGE_SIZE,
@@ -271,11 +268,7 @@ unsafe fn get_memory_slice<'instance>(
     init: &MemoryInitializer,
     instance: &'instance Instance,
 ) -> &'instance mut [u8] {
-    let memory = if let Some(defined_memory_index) =
-        instance.module.defined_memory_index(init.memory_index)
-    {
-        instance.memory(defined_memory_index)
-    } else {
+    let memory = {
         let import = instance.imported_memory(init.memory_index);
         let foreign_instance = (&mut *(import).vmctx).instance();
         let foreign_memory = &mut *(import).from;
@@ -372,7 +365,7 @@ fn initialize_instance(
     match &instance.module.memory_initialization {
         MemoryInitialization::Paged { map, out_of_bounds } => {
             for (index, pages) in map {
-                let memory = instance.memory(index);
+                let memory = instance.memory(instance.module.memory_index(index));
                 let slice =
                     unsafe { slice::from_raw_parts_mut(memory.base, memory.current_length) };
 
@@ -487,7 +480,7 @@ unsafe fn initialize_vmcontext(instance: &Instance, req: InstanceAllocationReque
     for i in 0..module.memory_plans.len() - module.num_imported_memories {
         ptr::write(
             ptr,
-            instance.memories[DefinedMemoryIndex::new(i)].vmmemory(),
+            instance.memories[MemoryIndex::new(i)].vmmemory(),
         );
         ptr = ptr.add(1);
     }
@@ -563,13 +556,13 @@ impl OnDemandInstanceAllocator {
     fn create_memories(
         &self,
         module: &Module,
-    ) -> Result<PrimaryMap<DefinedMemoryIndex, Memory>, InstantiationError> {
+    ) -> Result<PrimaryMap<MemoryIndex, Memory>, InstantiationError> {
         let creator = self
             .mem_creator
             .as_deref()
             .unwrap_or_else(|| &DefaultMemoryCreator);
         let num_imports = module.num_imported_memories;
-        let mut memories: PrimaryMap<DefinedMemoryIndex, _> =
+        let mut memories: PrimaryMap<MemoryIndex, _> =
             PrimaryMap::with_capacity(module.memory_plans.len() - num_imports);
         for plan in &module.memory_plans.values().as_slice()[num_imports..] {
             memories

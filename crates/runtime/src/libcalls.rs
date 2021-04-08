@@ -63,7 +63,7 @@ use crate::vmcontext::{VMCallerCheckedAnyfunc, VMContext};
 use std::mem;
 use std::ptr::{self, NonNull};
 use wasmtime_environ::wasm::{
-    DataIndex, DefinedMemoryIndex, ElemIndex, GlobalIndex, MemoryIndex, TableElementType,
+    DataIndex, ElemIndex, GlobalIndex, MemoryIndex, TableElementType,
     TableIndex,
 };
 
@@ -192,7 +192,7 @@ pub unsafe extern "C" fn wasmtime_memory32_grow(
     memory_index: u32,
 ) -> u32 {
     let instance = (&mut *vmctx).instance();
-    let memory_index = DefinedMemoryIndex::from_u32(memory_index);
+    let memory_index = MemoryIndex::from_u32(memory_index);
 
     instance
         .memory_grow(memory_index, delta)
@@ -202,7 +202,7 @@ pub unsafe extern "C" fn wasmtime_memory32_grow(
 /// Implementation of memory.size for locally-defined 32-bit memories.
 pub unsafe extern "C" fn wasmtime_memory32_size(vmctx: *mut VMContext, memory_index: u32) -> u32 {
     let instance = (&mut *vmctx).instance();
-    let memory_index = DefinedMemoryIndex::from_u32(memory_index);
+    let memory_index = MemoryIndex::from_u32(memory_index);
 
     instance.memory_size(memory_index)
 }
@@ -354,9 +354,9 @@ pub unsafe extern "C" fn wasmtime_memory_fill(
     len: u32,
 ) {
     let result = {
-        let memory_index = DefinedMemoryIndex::from_u32(memory_index);
+        let memory_index = MemoryIndex::from_u32(memory_index);
         let instance = (&mut *vmctx).instance();
-        instance.defined_memory_fill(memory_index, dst, val, len)
+        instance.memory_fill(memory_index, dst, val, len)
     };
     if let Err(trap) = result {
         raise_lib_trap(trap);

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="CPP_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/bforest/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/codegen/meta/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/codegen/shared/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/codegen/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/entity/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/filetests/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/frontend/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/interpreter/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/jit/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/jit/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/jit/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/module/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/native/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/object/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/object/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/peepmatic/crates/automata/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/peepmatic/crates/fuzzing/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/peepmatic/crates/macro/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/peepmatic/crates/runtime/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/peepmatic/crates/souper/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/peepmatic/crates/test-operator/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/peepmatic/crates/test/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/peepmatic/crates/test/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/peepmatic/crates/traits/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/peepmatic/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/peepmatic/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/preopt/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/reader/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/serde/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/umbrella/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/wasm/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cranelift/wasm/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/bench-api/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/c-api/macros/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/c-api/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/cache/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/cache/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/cranelift/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/debug/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/environ/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/fiber/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/fuzzing/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/jit/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/lightbeam/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/lightbeam/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/lightbeam/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/lightbeam/wasmtime/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/misc/run-examples/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/misc/rust/macro/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/misc/rust/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/obj/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/profiling/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/runtime/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/test-programs/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/test-programs/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wasi-common/WASI/tools/witx/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wasi-common/WASI/tools/witx/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wasi-common/WASI/tools/witx/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wasi-common/cap-std-sync/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wasi-common/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wasi-crypto/spec/implementations/hostcalls/rust/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wasi-crypto/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wasi-nn/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wasi-nn/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wasi/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wasmtime/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wast/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wiggle/borrow/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wiggle/generate/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wiggle/macro/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wiggle/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wiggle/test-helpers/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wiggle/test-helpers/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wiggle/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wiggle/wasmtime/macro/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wiggle/wasmtime/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/wiggle/wasmtime/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

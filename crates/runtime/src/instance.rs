@@ -53,7 +53,7 @@ pub(crate) struct Instance {
     offsets: VMOffsets,
 
     /// WebAssembly linear memory data.
-    memories: PrimaryMap<DefinedMemoryIndex, Memory>,
+    memories: PrimaryMap<MemoryIndex, Memory>,
 
     /// WebAssembly table data.
     tables: PrimaryMap<DefinedTableIndex, Table>,
@@ -164,28 +164,23 @@ impl Instance {
 
     /// Get a locally defined or imported memory.
     pub(crate) fn get_memory(&self, index: MemoryIndex) -> VMMemoryDefinition {
-        if let Some(defined_index) = self.module.defined_memory_index(index) {
-            self.memory(defined_index)
-        } else {
-            let import = self.imported_memory(index);
-            *unsafe { import.from.as_ref().unwrap() }
-        }
+        self.memory(index)
     }
 
     /// Return the indexed `VMMemoryDefinition`.
-    fn memory(&self, index: DefinedMemoryIndex) -> VMMemoryDefinition {
+    fn memory(&self, index: MemoryIndex) -> VMMemoryDefinition {
         unsafe { *self.memory_ptr(index) }
     }
 
     /// Set the indexed memory to `VMMemoryDefinition`.
-    fn set_memory(&self, index: DefinedMemoryIndex, mem: VMMemoryDefinition) {
+    fn set_memory(&self, index: MemoryIndex, mem: VMMemoryDefinition) {
         unsafe {
             *self.memory_ptr(index) = mem;
         }
     }
 
     /// Return the indexed `VMMemoryDefinition`.
-    fn memory_ptr(&self, index: DefinedMemoryIndex) -> *mut VMMemoryDefinition {
+    fn memory_ptr(&self, index: MemoryIndex) -> *mut VMMemoryDefinition {
         let index = usize::try_from(index.as_u32()).unwrap();
         unsafe { self.memories_ptr().add(index) }
     }
@@ -289,13 +284,7 @@ impl Instance {
                 .into()
             }
             EntityIndex::Memory(index) => {
-                let (definition, vmctx) =
-                    if let Some(def_index) = self.module.defined_memory_index(*index) {
-                        (self.memory_ptr(def_index), self.vmctx_ptr())
-                    } else {
-                        let import = self.imported_memory(*index);
-                        (import.from, import.vmctx)
-                    };
+                let (definition, vmctx) = (self.memory_ptr(*index), self.vmctx_ptr());
                 ExportMemory {
                     definition,
                     vmctx,
@@ -358,7 +347,23 @@ impl Instance {
     }
 
     /// Return the memory index for the given `VMMemoryDefinition`.
-    pub(crate) fn memory_index(&self, memory: &VMMemoryDefinition) -> DefinedMemoryIndex {
+    pub(crate) fn memory_index(&self, memory: &VMMemoryDefinition) -> MemoryIndex {
+        let offsets = &self.offsets;
+        let begin = unsafe {
+            (&self.vmctx as *const VMContext as *const u8)
+                .add(usize::try_from(offsets.vmctx_memories_begin()).unwrap())
+        } as *const VMMemoryDefinition;
+        let end: *const VMMemoryDefinition = memory;
+        // TODO: Use `offset_from` once it stablizes.
+        let index = MemoryIndex::new(
+            (end as usize - begin as usize) / mem::size_of::<VMMemoryDefinition>(),
+        );
+        assert_lt!(index.index(), self.memories.len());
+        index
+    }
+
+    /// Return the defined memory index for the given `VMMemoryDefinition`.
+    pub(crate) fn defined_memory_index(&self, memory: &VMMemoryDefinition) -> DefinedMemoryIndex {
         let offsets = &self.offsets;
         let begin = unsafe {
             (&self.vmctx as *const VMContext as *const u8)
@@ -377,7 +382,7 @@ impl Instance {
     ///
     /// Returns `None` if memory can't be grown by the specified amount
     /// of pages.
-    pub(crate) fn memory_grow(&self, memory_index: DefinedMemoryIndex, delta: u32) -> Option<u32> {
+    pub(crate) fn memory_grow(&self, memory_index: MemoryIndex, delta: u32) -> Option<u32> {
         let result = self
             .memories
             .get(memory_index)
@@ -391,7 +396,7 @@ impl Instance {
     }
 
     /// Returns the number of allocated wasm pages.
-    pub(crate) fn memory_size(&self, memory_index: DefinedMemoryIndex) -> u32 {
+    pub(crate) fn memory_size(&self, memory_index: MemoryIndex) -> u32 {
         self.memories
             .get(memory_index)
             .unwrap_or_else(|| panic!("no memory for index {}", memory_index.index()))
@@ -627,9 +632,9 @@ impl Instance {
     /// # Errors
     ///
     /// Returns a `Trap` error if the memory range is out of bounds.
-    pub(crate) fn defined_memory_fill(
+    pub(crate) fn memory_fill(
         &self,
-        memory_index: DefinedMemoryIndex,
+        memory_index: MemoryIndex,
         dst: u32,
         val: u32,
         len: u32,
@@ -814,7 +819,7 @@ impl InstanceHandle {
     }
 
     /// Return the memory index for the given `VMMemoryDefinition` in this instance.
-    pub fn memory_index(&self, memory: &VMMemoryDefinition) -> DefinedMemoryIndex {
+    pub fn memory_index(&self, memory: &VMMemoryDefinition) -> MemoryIndex {
         self.instance().memory_index(memory)
     }
 
@@ -822,7 +827,7 @@ impl InstanceHandle {
     ///
     /// Returns `None` if memory can't be grown by the specified amount
     /// of pages.
-    pub fn memory_grow(&self, memory_index: DefinedMemoryIndex, delta: u32) -> Option<u32> {
+    pub fn memory_grow(&self, memory_index: MemoryIndex, delta: u32) -> Option<u32> {
         self.instance().memory_grow(memory_index, delta)
     }
 

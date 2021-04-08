@@ -122,7 +122,7 @@ pub enum MemoryInitialization {
     /// By processing the data segments at module compilation time, the uffd fault handler doesn't have to do
     /// any work to point the kernel at the right linear memory page to use.
     Paged {
-        /// The map of defined memory index to a list of initialization pages.
+        /// The map of memory indices to a list of initialization pages.
         /// The list of page data is sparse, with None representing a zero page.
         /// Each page of initialization data is WebAssembly page-sized (64 KiB).
         /// The size of the list will be the maximum page written to by a data segment.
